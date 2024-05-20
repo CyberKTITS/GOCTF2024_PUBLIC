@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    position: relative;
+    margin: 20px auto;
+}
+
+.search_result {
+    display: inline;
+    position: relative;
+    margin: 0 auto;
+}
+
+th {
+    font-weight: bold;
+	padding: 5px;
+	background: #efefef;
+	border: 1px solid #dddddd;
+}
+
+td {
+    padding: 5px;
+}
+
+table, th, tr, td {
+    border: 1px solid #dddddd;
+	border-collapse: collapse; 
+}
+
+table td {
+    max-width: 900px;
+    min-width: 200px;
+}
+
+#script {
+    padding: 2px;
+    border-radius: 2px;
+}

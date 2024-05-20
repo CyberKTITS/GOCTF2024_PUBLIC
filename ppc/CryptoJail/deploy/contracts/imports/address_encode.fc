@@ -1,0 +1,75 @@
+{-
+  TASK 5 - Address encoder
+  Write the method that for any valid MsgAddressInt with addr_std constructor
+  without anycast
+  (see https://github.com/ton-blockchain/ton/blob/master/crypto/block/block.tlb#L105)
+ returns the slice that contain ASCII encoded base64url user-friendly bouncable
+ address (without test-only flag), see https://ton.org/docs/#/howto/step-by-step?id=_1-smart-contract-addresses
+-}
+
+(slice) concat_slices(slice s1, slice s2) asm "SWAP NEWC STSLICE STSLICE ENDC CTOS";
+(slice) two_zero_bytes() asm "x{0000} PUSHSLICE";
+(slice) bouncable_tag() asm "x{11} PUSHSLICE";
+
+(slice) CRC16(slice data) inline_ref {
+  slice new_data = concat_slices(data, two_zero_bytes());
+  int reg = 0;
+  while (~ new_data.slice_data_empty?()) {
+    int byte = new_data~load_uint(8);
+    int mask = 0x80;
+    while (mask > 0) {
+      reg <<= 1;
+      if (byte & mask) {
+        reg += 1;
+      }
+      mask >>= 1;
+      if (reg > 0xffff) {
+        reg &= 0xffff;
+        reg ^= 0x1021;
+      }
+    }
+  }
+  (int q, int r) = divmod(reg, 256);
+  return begin_cell().store_uint(q, 8).store_uint(r, 8).end_cell().begin_parse();
+}
+
+
+;; BASE64
+;; base64urlchars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+(slice) base64urlchars() asm "x{4142434445464748494A4B4C4D4E4F505152535455565758595A6162636465666768696A6B6C6D6E6F707172737475767778797A303132333435363738392D5F} PUSHSLICE";
+(slice) preload_offset(slice s, int offset, int bits) asm "SDSUBSTR";
+
+(slice) base64encode(slice data) { ;; only for slice_bits / 24 !!!
+  slice chars = base64urlchars();
+  builder res = begin_cell();
+
+  while (data.slice_bits() >= 24) {
+    (int bs1, int bs2, int bs3) = (data~load_uint(8), data~load_uint(8), data~load_uint(8));
+
+    int n = (bs1 << 16) | (bs2 << 8) | bs3;
+
+    res = res.store_slice(chars.preload_offset(((n >> 18) & 63) * 8, 8))
+             .store_slice(chars.preload_offset(((n >> 12) & 63) * 8, 8))
+             .store_slice(chars.preload_offset(((n >>  6) & 63) * 8, 8))
+             .store_slice(chars.preload_offset(((n      ) & 63) * 8, 8));
+  }
+  return res.end_cell().begin_parse();
+}
+
+
+;; testable
+(slice) encode_address(slice Address) method_id {
+  (int wc, int hash) = Address.parse_std_addr();
+
+  slice user_friendly_address = begin_cell()
+          .store_slice(bouncable_tag())
+          .store_uint((wc + 0x100) % 0x100, 8)
+          .store_uint(hash, 256)
+          .end_cell().begin_parse();
+
+  slice checksum = CRC16(user_friendly_address);
+  slice user_friendly_address_with_checksum = concat_slices(user_friendly_address, checksum);
+  user_friendly_address_with_checksum~dump();
+
+  return base64encode(user_friendly_address_with_checksum);
+}

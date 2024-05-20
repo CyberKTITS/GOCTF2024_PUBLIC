@@ -1,0 +1,29 @@
+{% extends "header_base.html" %}
+{% block title %}Создать запись{% endblock %}
+
+{% block head %}
+{{ super() }}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/create_post.css') }}">
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+
+<form action="{{ url_for('create_post') }}" method="POST">
+    <div class="input_container">
+        <label for="title">Тема</label>
+        <input type="text" name="title" required>
+    </div>
+    <div class="input_container">
+        <label for="text">Описание</label>
+        <textarea name="text" rows="10" required></textarea>
+    </div>
+    <div class="checkbox_container">
+        <input type="checkbox" checked name="private" onclick="return false;">
+        <label for="private">Приватный</label>
+    </div>
+    <input type="submit" value="Создать">
+</form>
+
+{% endblock %}

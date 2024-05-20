@@ -1,0 +1,112 @@
+:root {
+    --header-background-color: #354299;
+    --header-text-color: #e3edff;
+}
+
+header * {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    max-width: 800px;
+    margin: auto;
+}
+
+header {
+    position: static;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 30px;
+
+    padding: 10px 20px;
+
+    color: var(--header-text-color);
+    background-color: var(--header-background-color);
+}
+
+header nav {
+    display: flex;
+    flex-direction: row;
+
+    gap: 0 30px;
+}
+
+header .profile {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+}
+
+.profile:hover .dropdown,
+.dropdown:hover {
+    pointer-events: all;
+    display: flex;
+}
+
+.profile .dropdown {
+    pointer-events: none;
+    display: none;
+    
+    position: absolute;
+    top: 100%;
+    padding-top: 10px;
+
+    flex-direction: column;
+
+    gap: 5px 0;
+
+    width: 100%;
+    padding: 10px;
+
+    background-color: var(--header-background-color);
+}
+
+.dropdown-item {
+    cursor: pointer;
+
+    padding: 0 5px;
+
+    background-color: var(--header-background-color);
+}
+
+.dropdown-item a {
+    display: block;
+
+    text-align: center;
+    font-size: 1em;
+
+    color: var(--header-text-color);
+
+    text-decoration: none;
+}
+
+.dropdown-item:hover {
+    background-color: var(--header-text-color);
+}
+
+.dropdown-item:hover a {
+    color: var(--header-background-color);
+
+}
+
+header .profile .header {
+    display: flex;
+    flex-direction: row;
+    gap: 0 15px;
+
+    align-items: center;
+    margin: auto;
+}
+
+header .nav-item {
+    color: inherit;
+    text-decoration: none;
+}

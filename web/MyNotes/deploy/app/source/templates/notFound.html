@@ -1,0 +1,26 @@
+﻿{% extends "header_base.html" %}
+{% block title %}404 Not found{% endblock %}
+{% block head %}
+{{ super() }}
+
+<style>
+
+    .text {
+        font-size: 4em;
+        font-weight: bold;
+
+        text-align: center;
+
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+</style>
+
+{% endblock %}
+{% block content %}
+{{ super() }}
+
+<h1 class="text">Запись не найдена</h1>
+
+{% endblock %}

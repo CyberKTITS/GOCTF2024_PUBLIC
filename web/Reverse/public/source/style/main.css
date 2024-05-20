@@ -1,0 +1,190 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.post_container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    padding: 5px;
+
+    background-color: white;
+    filter: drop-shadow(0px 10px 25px rgba(83, 80, 97, 1));
+}
+
+.post {
+    position: relative;
+    display: block;
+
+    padding: 15px;
+    
+    border-radius: 4px;
+
+    background: rgb(100, 27, 194);
+    background: linear-gradient(133deg, rgba(100, 27, 194, .3) 0%, rgba(69, 20, 194, .3) 100%);
+
+    cursor: pointer;
+    user-select: none;
+
+    transition: all .2s;
+}
+
+.post:hover {
+    box-shadow: 0px 1px 10px rgba(43, 10, 120, 0.7);
+}
+
+.post_header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.post_created_at {
+    font-size: 14px;
+    color: rgb(103, 28, 224);
+}
+
+.post_username {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgb(91, 74, 239);
+}
+
+.post_title {
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(57, 56, 86);
+}
+
+header {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px;
+
+    background-color: white;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, .5);
+}
+
+header nav {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.nav-item {
+    user-select: none;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    text-decoration: underline;
+}
+
+.profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: lightblue;
+}
+
+.icon span {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.logout_button {
+    transition: .1s;
+}
+
+.logout_button:hover {
+    color: rgb(91, 74, 239);
+    cursor: pointer;
+}
+
+#dialog_container {
+    pointer-events: none;
+    position: fixed;
+    left: 50%;
+    top: 0%;
+
+    transform: translate(-50%, -50%);
+
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 5px;
+
+    background-color: white;
+    box-shadow: 0px 5px 25px rgba(0, 0, 0, .8);
+    opacity: 0;
+
+    z-index: 999;
+
+    transition: all .3s ease-in-out;
+}
+
+#dialog_container.open {
+    opacity: 1;
+    top: 50%;
+    pointer-events: all;
+}
+
+#dialog_container.open ~ .dialog_area {
+    opacity: 1;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+#dialog_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dialog_close {
+    cursor: pointer;
+}
+
+.dialog_area {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    background-color: rgba(0, 0, 0, .3);
+    z-index: 1;
+
+    transition: all .2s;
+}

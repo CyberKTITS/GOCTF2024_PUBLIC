@@ -1,0 +1,34 @@
+services:
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - 1552:80
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+      - ./source:/var/www/html/
+    depends_on:
+      - php
+
+  mysql:
+    build: ./sql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=64d0ea90b1a2307ad12c7e2f1d158ca6a3
+    volumes:
+      - data:/var/mysql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  php:
+    build: ./php
+    restart: always
+    environment:
+      - SECRET=cd8d7b32104c83bdee71e8ab0dba7264d0ea90b1a2307ad12c7e2f1d158ca6a3
+    volumes:
+      - ./source:/var/www/html/
+      - ./php/php.ini:/usr/local/php/conf.d/php.ini
+
+volumes:
+  data:
+

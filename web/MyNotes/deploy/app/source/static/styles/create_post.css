@@ -1,0 +1,85 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px 0;
+
+    align-items: end;
+
+    margin: 10px;
+
+    margin-top: 30px;
+}
+
+.input_container {
+    position: relative;
+
+    width: 100%;
+}
+
+.input_container input.error {
+    border-color: red;
+}
+
+form *::after {
+    position: absolute;
+    display: block;
+    top: 50%;
+    right: calc(-150% - 15px);
+
+    font-size: 1.5em;
+    color: white;
+
+    content: attr(data-error-content);
+
+    transform: translateY(-50%);
+
+    background-color: red;
+}
+
+.input_container input[type="text"],
+.input_container textarea {
+    width: calc(100% - 15px);
+
+    padding: 7.5px;
+
+    resize: none;
+}
+
+.input_container label {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+
+    z-index: 999;
+}
+
+.input_container label::before {
+    position: absolute;
+    content: '';
+    bottom: 6px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: 3px;
+
+    z-index: -1;
+
+    background-color: white;
+}
+
+input[type="submit"] {
+    width: min-content;
+
+    cursor: pointer;
+    
+    padding: 7.5px 20px;
+
+    font-size: 1.1em;
+
+    outline: none;
+    border: none;
+
+    border-radius: 5px;
+
+    color: #dcdcdc;
+    background-color: #2297a4;
+}

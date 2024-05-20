@@ -1,0 +1,21 @@
+services:
+  api:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - 1554:8080
+    depends_on:
+      - mysql
+  mysql:
+    build: ./sql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=422a04445515881b120784a7
+    volumes:
+      - data:/var/mysql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  data:
+

@@ -1,0 +1,25 @@
+<script>
+    $(() => {
+        $("title").html('Вход');
+    });
+</script>
+<link rel="stylesheet" href="styles/login.css">
+<form id="auth_form" action="/php/auth.php" method="post">
+    <div class="form_body">
+        <h1 class="title">Вход</h1>
+
+        <div class="input_container">
+            <div class="input_field">
+                <label for="login">Логин</label>
+                <input type="text" name="login" id="login">
+            </div>
+
+            <div class="input_field">
+                <label for="password">Пароль</label>
+                <input type="password" name="password" id="password">
+            </div>
+        </div>
+        
+        <input type="submit" value="Войти">
+    </div>
+</form>

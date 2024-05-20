@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/header.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/fontawesome/css/all.min.css') }}">
+
+{% endblock %}
+
+
+{% block content %}
+<header>
+    <nav>
+        <a href="{{ url_for('get_all_posts') }}" class="nav-item"><span class="icon"></span><span class="label">Все записи</span></a>
+        <a href="{{ url_for('get_my_posts') }}" class="nav-item"><span class="icon"></span><span class="label">Мои записи</span></a>
+        <a href="{{ url_for('create_post') }}" class="nav-item"><span class="icon"></span><span class="label">Создать запись</span></a>
+    </nav>
+    <div class="profile">
+        <div class="header">
+            <div class="username">{{ user.username }}</div>
+            <span class="icon fa-solid fa-user fa-lg"></span>
+        </div>
+        <div class="dropdown">
+            <div class="dropdown-item"><a id="logout">Выйти</a></div>
+        </div>
+    </div>
+</header>
+<script src="{{ url_for('static', filename='js/header.js') }}"></script>
+{% endblock%}
